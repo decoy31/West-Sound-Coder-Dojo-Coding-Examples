@@ -1,10 +1,46 @@
 .Menu {
 	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
 .Menu .MenuItemContainer {
-	display: block;
+	display: inline-block;
+	cursor: pointer;
+	padding: 40px 50px 10px 10px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	border-collapse: collapse;
+	border-left: 1px solid #D3D3D3;
 }
 
-.Menu .MenuItemContainer .MenuItem {
+.Menu .MenuItemContainer:last-child {
+	border-right: 1px solid #D3D3D3;
+}
+
+.Menu .MenuItemContainer {
+	background-color: #ffffff;
+}
+
+.Menu .MenuItemContainer.selected {
+	border-color: #1f62bb;
+	background-color: #1f62bb;
+}
+
+.Menu .MenuItemContainer:hover,
+.Menu .MenuItemContainer.selected:hover {
+	background-color: #2394ff;
+}
+
+.Menu .MenuItemContainer .MenuItem,
+.Menu .MenuItemContainer .MenuItem:visited {
+	color: #333333;
+	text-decoration: none;
+}
+
+
+.Menu .MenuItemContainer:hover > .MenuItem,
+.Menu .MenuItemContainer.selected > .MenuItem {
+	color: #ffffff;
 }

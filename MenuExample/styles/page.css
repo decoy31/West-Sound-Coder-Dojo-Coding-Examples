@@ -1,3 +1,38 @@
 .MenuExamplePage {
+	color: #333333;
+}
 
+.MenuExamplePage header {
+	border-bottom: 10px solid #1f62bb;
+}
+
+.MenuExamplePage header .Menu {
+}
+
+.MenuExamplePage section {
+	width: 100%;
+}
+
+.MenuExamplePage #home {
+}
+
+.MenuExamplePage #product {
+}
+
+.MenuExamplePage #about {
+}
+
+.MenuExamplePage .content {
+	margin: 0 auto;
+	padding-left: 10px;
+	padding-right: 10px;
+	max-width: 1000px;
+}
+
+@media (min-width: 600px) {
+	// Make sure on desktop size screens, the padding around the content provides enough breathing room.
+	.MenuExamplePage .content {
+		padding-left: 10%;
+		padding-right: 10%;
+	}
 }

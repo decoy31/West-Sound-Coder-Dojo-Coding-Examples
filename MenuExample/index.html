@@ -6,37 +6,61 @@
 
 	<!-- Styles -->
 	<link href="styles/reset.css" rel="stylesheet">
+	<link href="styles/common.css" rel="stylesheet">
 	<link href="styles/page.css" rel="stylesheet">
 	<link href="styles/Menu.css" rel="stylesheet">
 
+	<!-- Scripts -->
+	<script src="scripts/Navigate.js"></script>
 	<script src="scripts/Menu.js"></script>
 	<script>
 		function onExamplePageLoad () {
+			// Get the element on the page with an `id` attribute of "menu".
 			var menuContainerElement = document.getElementById('menu');
+
+			// Create a collection of menu items and associated urls.
 			var menuItems = [
-				new MenuItem('Home', '/'),
+				new MenuItem('Home', '#home'),
 				new MenuItem('Product', '#product'),
 				new MenuItem('About', '#about')
 			];
 
-			// Calling the `init` function inside the Menu.js file
-			initMenu(menuContainerElement, menuItems);
+			// Calling the `initMenu` function inside the Menu.js file to initialize the menu.
+			var menu = initMenu(menuContainerElement, menuItems);
+
+			// Calling the `initNavigation` function inside the Navigate.js file to hook up the navigation between the
+			// menu items.
+			initNavigation(menu);
 		}
 	</script>
 </head>
 <body class="MenuExamplePage" onload="onExamplePageLoad();">
-	<header>
-		<div id="menu"></div>
-	</header>
-	<section id="home">
-	</section>
-	<section id="product">
-	</section>
-	<section id="about">
-		Made by Tim Duffey for West Sound Coder Dojo.
-	</section>
-	<footer>
-
-	</footer>
+	<div class="content">
+		<header>
+			<div id="menu">
+				<!-- The menu gets placed here. -->
+			</div>
+		</header>
+		<section id="home" data-hash-key="home">
+			<h1>Welcome!</h1>
+			<p>This is a demo page created as an example for students and parents who attend the
+				<a href="http://www.westsoundcoderdojo.com/">West Sound Coder Dojo</a> classes. This page is demoing
+				creating a navigation menu using JavaScript. What this particular menu implementation ultimately creates
+				is the bare bones of a single page web application.</p>
+		</section>
+		<section id="product" data-hash-key="product">
+			<h1>Product</h1>
+			<p>This code is meant to be used for demonstration and tinkering purposes only. It is not optimized for and
+				it is not recommended to be used out on the World Wide Web.</p>
+		</section>
+		<section id="about" data-hash-key="about">
+			<h1>About</h1>
+			<p>Created by <a href="https://www.linkedin.com/in/timothyduffey" target="_blank">Tim Duffey</a> for
+				<a href="http://www.westsoundcoderdojo.com/" target="_blank">West Sound Coder Dojo</a>.</p>
+		</section>
+		<footer>
+			<small>&copy;2016 Tim Duffey</small>
+		</footer>
+	</div>
 </body>
 </html>

@@ -1,6 +1,10 @@
 "use strict";
 
 /**
+ * @author Tim Duffey
+ */
+
+/**
  * Creates a new instance of the `MenuItem` class.
  *
  * @param {string} title Title of the menu item.
@@ -10,6 +14,7 @@
 function MenuItem (title, url) {
 	this.title = title;
 	this.url = url;
+	this.isSelected = false;
 }
 
 /**
@@ -17,13 +22,14 @@ function MenuItem (title, url) {
  *
  * @constructor
  */
-function Menu (menuItems) {
+function Menu (menuItems, selectedMenuItemIndex) {
 	/**
 	 * Menu items array.
 	 *
 	 * @type {Array<MenuItem>}
 	 */
 	this.items = menuItems || [];
+	this.selectItem(selectedMenuItemIndex, true);
 
 	var menuElement = document.createElement('ul');
 	menuElement.setAttribute('class', 'Menu');
@@ -59,11 +65,41 @@ Menu.prototype = {
 	 */
 	removeItem: function (title) {
 		for (var index = 0; index < this.items.length; index++) {
-			if (this.items[index].title === title) {
+			var menuItem = this.items[index];
+
+			if (menuItem.title === title) {
 				this.items.splice(index, 1);
 				this._updateMenu();
 				break;
 			}
+		}
+	},
+
+	selectItem: function (menuItemIndex, stopUpdateMenu) {
+		var selMenuItemIndex = parseInt(menuItemIndex, 10) || 0;
+
+		if (isNaN(selMenuItemIndex) || selMenuItemIndex >= this.items.length || selMenuItemIndex < 0) {
+			selMenuItemIndex = this.items.length - 1;
+		}
+
+		for (var index = 0; index < this.items.length; index++) {
+			var menuItem = this.items[index];
+			menuItem.isSelected = index === selMenuItemIndex;
+		}
+
+		if (!stopUpdateMenu) {
+			this._updateMenu();
+		}
+	},
+
+	selectItemByUrl: function (url, stopUpdateMenu) {
+		for (var index = 0; index < this.items.length; index++) {
+			var menuItem = this.items[index];
+			menuItem.isSelected = menuItem.url === url;
+		}
+
+		if (!stopUpdateMenu) {
+			this._updateMenu();
 		}
 	},
 
@@ -76,33 +112,59 @@ Menu.prototype = {
 		this.menuElement.innerHTML = '';
 		
 		for (var index = 0; index < this.items.length; index++) {
+			var menuItem = this.items[index];
+
 			// Create the link element that will represent our menu item.
 			var linkElement = document.createElement('a');
-			linkElement.setAttribute('href', this.items[index].url);
+			linkElement.setAttribute('href', menuItem.url);
 			linkElement.setAttribute('class', 'MenuItem');
 			linkElement.setAttribute('data-index', index);
-			linkElement.innerHTML = this.items[index].title;
+			linkElement.innerHTML = menuItem.title;
 
 			// Create the list item container element to hold our menu item.
 			var listItemElement = document.createElement('li');
-			listItemElement.setAttribute('class', 'MenuItemContainer');
+			var classes = 'MenuItemContainer';
+			if (menuItem.isSelected) {
+				classes += ' selected';
+			}
+			listItemElement.setAttribute('class', classes);
+			listItemElement.onclick = this._onMenuItemClick.bind(this);
 
 			// Add the menu item to list item container.
 			listItemElement.appendChild(linkElement);
 			this.menuElement.appendChild(listItemElement);
 		}
+	},
+
+	/**
+	 * Menu item click handler.
+	 *
+	 * @param {Event} e Event object.
+	 * @private
+	 */
+	_onMenuItemClick: function (e) {
+		e.stopPropagation();
+		var targetElement = e.currentTarget || e.target;
+		var linkElement = targetElement.firstChild;
+		window.location.href = linkElement.href;
+
+		var menuItemIndex = linkElement.getAttribute('data-index');
+		this.selectItem(menuItemIndex);
 	}
 };
 
 /**
- * Initializes an instance of the `Menu` class.
+ * Creates and initializes an instance of the `Menu` class.
  *
  * @param {Element} menuContainerElement
  * @param {Array<MenuItem>} [menuItems] Array of `MenuItems`.
+ * @returns {Menu} Returns the instance of `Menu` that gets created and initialized.
  */
 window.initMenu = function (menuContainerElement, menuItems) {
 	var menu = new Menu(menuItems);
 
 	// Add the menu to the container.
 	menuContainerElement.appendChild(menu.menuElement);
+
+	return menu;
 };
