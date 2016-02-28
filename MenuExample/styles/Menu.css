@@ -1,0 +1,10 @@
+.Menu {
+	list-style: none;
+}
+
+.Menu .MenuItemContainer {
+	display: block;
+}
+
+.Menu .MenuItemContainer .MenuItem {
+}

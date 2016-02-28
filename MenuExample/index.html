@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>West Sound Coder Dojo - Menu Example</title>
+
+	<!-- Styles -->
+	<link href="styles/reset.css" rel="stylesheet">
+	<link href="styles/page.css" rel="stylesheet">
+	<link href="styles/Menu.css" rel="stylesheet">
+
+	<script src="scripts/Menu.js"></script>
+	<script>
+		function onExamplePageLoad () {
+			var menuContainerElement = document.getElementById('menu');
+			var menuItems = [
+				new MenuItem('Home', '/'),
+				new MenuItem('Product', '#product'),
+				new MenuItem('About', '#about')
+			];
+
+			// Calling the `init` function inside the Menu.js file
+			initMenu(menuContainerElement, menuItems);
+		}
+	</script>
+</head>
+<body class="MenuExamplePage" onload="onExamplePageLoad();">
+	<header>
+		<div id="menu"></div>
+	</header>
+	<section id="home">
+	</section>
+	<section id="product">
+	</section>
+	<section id="about">
+		Made by Tim Duffey for West Sound Coder Dojo.
+	</section>
+	<footer>
+
+	</footer>
+</body>
+</html>
