@@ -20,6 +20,8 @@
 }
 
 .Menu .MenuItemContainer {
+	-webkit-transition: background-color 200ms ease-in-out 0s;
+	transition: background-color 200ms ease-in-out 0s;
 	background-color: #ffffff;
 }
 
@@ -35,10 +37,11 @@
 
 .Menu .MenuItemContainer .MenuItem,
 .Menu .MenuItemContainer .MenuItem:visited {
+	-webkit-transition: color 200ms ease-in-out 0s;
+	transition: color 200ms ease-in-out 0s;
 	color: #333333;
 	text-decoration: none;
 }
-
 
 .Menu .MenuItemContainer:hover > .MenuItem,
 .Menu .MenuItemContainer.selected > .MenuItem {
